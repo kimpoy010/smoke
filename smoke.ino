@@ -56,12 +56,7 @@ void loop() {
            while (client.connected()) {
               if (client.available()) {
                 char c = client.read();
-                  if (readString.length() < 100) {
-                    readString.append(c); 
-                    Serial.println(readString);
-
-                    // use AT commands here after reading the response from server
-                  } 
+                Serial.print(c);
               }
            }
 
@@ -81,8 +76,6 @@ void loop() {
     noTone(buzzer);
   }
   delay(1000);
-}
-
 }
 
 
