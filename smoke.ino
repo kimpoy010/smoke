@@ -15,7 +15,7 @@ EthernetClient client;
 char server[] = "192.168.2.100";
 int  interval = 5000; 
 char uid[] = "1"; 
-String readString = String(100); 
+String response = String(100); 
 
 void setup() {
   
@@ -37,7 +37,15 @@ void loop() {
   int analogSensor2 = analogRead(smokeA1);
   int analogSensor3 = analogRead(smokeA2);
   
+  Serial.print("Pin A5: ");
+  Serial.println(analogSensor1);
 
+  Serial.print("Pin A4: ");
+  Serial.println(analogSensor2);
+
+  Serial.print("Pin A3: ");
+  Serial.println(analogSensor3);
+  
   if (analogSensor1 > sensorThres1 || analogSensor2 > sensorThres2 || analogSensor3 > sensorThres3)
   {
           if(client.connect(server, 80)){
@@ -56,10 +64,17 @@ void loop() {
            while (client.connected()) {
               if (client.available()) {
                 char c = client.read();
-                Serial.print(c);
+                //Serial.print(c);
+                response= response + c;
+
+                 int contentBodyIndex = response.lastIndexOf('\n');
+                 if (contentBodyIndex > 0) {
+                    Serial.println(response.substring(contentBodyIndex));
+                 }
               }
            }
-
+           
+           
             
             client.stop();
             delay(1000); 
