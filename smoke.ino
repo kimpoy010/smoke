@@ -59,6 +59,8 @@ void loop() {
                   if (readString.length() < 100) {
                     readString.append(c); 
                     Serial.println(readString);
+
+                    // use AT commands here after reading the response from server
                   } 
               }
            }
